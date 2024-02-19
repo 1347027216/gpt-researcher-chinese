@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>GPT Researcher</title>
+    <meta name="description" content="A research assistant powered by GPT-4">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="./static/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/site/styles.css"/>
+    <style>
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        .agent-name {
+            text-align: center;
+        }
+
+        .agent-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .agent-choices {
+            display: none;
+        }
+
+        .btn-show {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<section class="landing">
+    <div class="max-w-5xl mx-auto text-center">
+        <h1 class="text-4xl font-extrabold mx-auto lg:text-7xl">
+            告别 <br>
+            <span
+                    style="background-image:linear-gradient(to right, #9867F0, #ED4E50); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                枯燥的研究</span>
+        </h1>
+        <p class="max-w-5xl mx-auto text-gray-600 mt-8" style="font-size:20px">
+            请向 GPT Researcher 看齐,他是你快速洞察和全面研究的人工智能伙伴。
+            GPT Researcher负责从准确的信息来源收集研究资料并整理，一站式平台让你的研究过程轻松无忧。
+        </p>
+        <a href="#form" class="btn btn-primary">立即使用</a>
+    </div>
+</section>
+
+<main class="container" id="form">
+    <div class="agent-item"><img src="/static/defaultAgentAvatar.JPG" class="avatar"
+                                 alt="Auto Agent"></div>
+    <form method="POST" class="mt-3" onsubmit="GPTResearcher.startResearch(); return false;">
+        <div class="form-group">
+            <label for="task" class="agent-question">接下来你想让我研究什么?</label>
+            <input type="text" id="task" name="task" class="form-control" required>
+            <input type="radio" name="agent" id="autoAgent" value="Auto Agent" checked hidden>
+        </div>
+        <div class="form-group">
+            <div class="row">
+
+
+            </div>
+            <button type="button" id="btnShowAuto" class="btn btn-secondary mt-3 btn-show">Auto Agent</button>
+        </div>
+        <div class="form-group">
+            <label for="report_type" class="agent-question">您希望我生成什么类型的报告?</label>
+            <select name="report_type" class="form-control" required>
+                <option value="research_report">研究报告</option>
+                <option value="resource_report">资源报告</option>
+                <option value="outline_report">大纲整理</option>
+            </select>
+        </div>
+        <input type="submit" value="开始整理" class="btn btn-primary button-padding">
+    </form>
+
+    <div class="margin-div">
+        <h2>Agent 输出</h2>
+        <p class="mt-2 text-left" style="font-size: 0.8rem;">
+            将生成专门针对您的任务定制的代理，以提供最精确的数据来源和相关的研究结果。</p>
+        <div id="output"></div>
+    </div>
+    <div class="margin-div">
+        <h2>调查结果</h2>
+        <div id="reportContainer"></div>
+        <div id="reportActions">
+            <div class="alert alert-info" role="alert" id="status"></div>
+            <a id="copyToClipboard" onclick="GPTResearcher.copyToClipboard()" class="btn btn-secondary mt-3"
+               style="margin-right: 10px;">Copy to clipboard</a>
+            <a id="downloadLink" href="#" class="btn btn-secondary mt-3" target="_blank">下载PDF</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>GPT Researcher &copy; 2023 | <a target="_blank" href="https://github.com/assafelovic/gpt-researcher">GitHub
+        Page</a></p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+<script src="/site/scripts.js"></script>
+<script>
+    // const btnChoose = document.getElementById('btnChoose');
+    const btnShowAuto = document.getElementById('btnShowAuto');
+    const autoAgentDiv = document.getElementById('autoAgentDiv');
+    const agentChoices = document.getElementsByClassName('agent-choices');
+
+    /**
+     btnChoose.addEventListener('click', function () {
+     btnShowAuto.style.display = 'inline-block';
+     btnChoose.style.display = 'none';
+     autoAgentDiv.style.display = 'none';
+     agentChoices[0].style.display = 'flex';
+     });
+     **/
+
+    btnShowAuto.addEventListener('click', function () {
+        btnShowAuto.style.display = 'none';
+        btnChoose.style.display = 'inline-block';
+        autoAgentDiv.style.display = 'flex';
+        agentChoices[0].style.display = 'none';
+    });
+</script>
+</body>
+
+</html>
